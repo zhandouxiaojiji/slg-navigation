@@ -273,16 +273,18 @@ static void
 fibheap_destroy_rec(struct heap_node *node)
 {
     struct heap_node *start = node;
+    struct heap_node *next;
 
     if (node == NULL) {
         return;
     }
 
     do {
+        next = node->right;
         fibheap_destroy_rec(node->child);
-        node = node->right;
-        free(node->left->data);
-        free(node->left);
+        free(node->data);
+        free(node);
+        node = next;
     } while (node != start);
 }
 
